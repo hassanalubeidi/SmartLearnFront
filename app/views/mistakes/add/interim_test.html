@@ -1,0 +1,40 @@
+<back-button></back-button>
+<segment-header>{{testPaper.title}}</segment-header>
+<div class="ui header">Where did you drop marks?</div>
+<div class="ui form" style="margin-top:20px">
+    <div class="inline field">
+        <label>Question position:</label>
+        <select class="ui search dropdown" ng-model="selectQuestionPosition" ng-change="checkPosition()">
+        <option value="">e.g. 1)a)i or 1/a/i</option>
+        <option ng-repeat="question in testPaper.questions" ng-value="{{question.id}}" ng-click="getQuestion()">{{question.position}}</option>
+        </select>
+    </div>
+    <div class="inline field" ng-show="attachMarksVisible">
+        <label>Marks:</label>
+        <input type="number" min="0" ng-max="{{selectedQuestion.marks}}" ng-model="newAnswer.marks" ng-change="checkMarks()">/{{selectedQuestion['out-of']}}
+    </div>
+    <div class="ui padded segment" ng-show="attachMistakesVisible">
+        
+        Keep track of your mistakes
+        
+        <div class="field">
+            <label>What went wrong?</label>
+            <textarea ng-model="newAnswer.problem['what-went-wrong']"></textarea>
+        </div>
+        <div class="field">
+            <label>Take an image of your mistake!</label>
+            <input type="file" name="fileToUpload" id="fileToUpload" ng-model="newAnswer.problem['base-64-image']">
+        </div>
+        <div class="ui red button" ng-click="addAnswer(newAnswer)">Add Problem</div>
+    </div>
+    <div class="ui segment" ng-show="newAnswers.length > 0">
+        Where you've dropped marks so far:
+        <ul>
+            <li ng-repeat="answer in newAnswers">{{answer.position}}: {{answer.marks}}/{{answer.out_of}}</li>
+        </ul>
+    </div>
+    <div class="ui fluid button" ng-click="setAsFinsihed()">I've finished entering my errors</div>
+</div>
+<script>
+$(".dropdown").dropdown()
+</script>

@@ -1,0 +1,10 @@
+
+<today>
+    <a ng-repeat="testPaper in testPapers"
+         ui-sref="interim_test_mistakes({id: testPaper.id})"
+         class="ui basic inverted circular button">
+        {{testPaper.title}}
+    </a>
+    
+</today>
+<problem-feed></problem-feed>
