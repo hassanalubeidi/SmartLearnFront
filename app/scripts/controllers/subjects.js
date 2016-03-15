@@ -8,8 +8,8 @@
  * Controller of the smartLearnIoApp
  */
 angular.module('smartLearnIoApp')
-  .controller('SubjectsCtrl', ['Subject', 'Topic',  'JsonAPI','$scope', '$stateParams',
-   function (Subject, Topic, JsonAPI, $scope, $stateParams) {
+  .controller('SubjectsCtrl', ['Subject', 'Objective', 'Topic',  'JsonAPI','$scope', '$stateParams',
+   function (Subject, Objective, Topic, JsonAPI, $scope, $stateParams) {
     $scope.$parent.wide = true
     $scope.$on("$destroy", function(){
         $scope.$parent.wide = false;
@@ -33,6 +33,11 @@ angular.module('smartLearnIoApp')
             $scope.selectedTopicIndex = id
             Topic.get(id).then(function(response) {
                 $scope.topic = JsonAPI.pluckAttributes([response.data.data])[0]
+            })
+        }
+        $scope.getProgress = function(index) {
+            Objective.get($scope.topic.objectives[index].id).then(function(response) {
+                $scope.topic.objectives[index].progress = JsonAPI.pluckAttributes([response.data.data])[0].progress
             })
         }
     })

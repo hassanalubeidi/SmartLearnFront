@@ -8,7 +8,7 @@
         <a style="float:right" class="ui red circular icon button" ng-click="addProblemDialogVisible = !addProblemDialogVisible">
             <i class="ui plus icon"></i>
         </a>
-        <div style="float:right" class="ui floating circular dropdown icon button">
+        <!--<div style="float:right" class="ui floating circular dropdown icon button">
             <i class="filter icon"></i>
             <div class="menu">
                 <div class="ui icon search input">
@@ -54,7 +54,7 @@
         </div>
         <div style="float:right" class="ui floating circular icon button" >
             <i class="ui search icon"></i>
-        </div>
+        </div>-->
     </div>
 
     <div class="ui segment form" ng-show="addProblemDialogVisible">
@@ -82,7 +82,6 @@
 
     <div class="ui feed segment">
         <div class="event" ng-repeat="problem in problems | reverse" style="margin-bottom:15px">
-            <div class="ui divider"></div>
             <div class="content">
                 <div class="summary">
                     <a ui-sref="mistakes({id:problem.id})">{{problem["what-went-wrong"]}}</a>
@@ -92,9 +91,9 @@
                     </div>
                 </div>
                 <div class="meta">
-                    <a class="ui small label">Equilibrium & PH</a>
+                    <a class="ui small label">{{problem.topic.title}}</a>
                     <a class="like">
-                        1 review, 3 hours ago
+                        0 reviews
                     </a>
                     <a ng-click="removeProblem(problems, ((problems.length - 1) - $index))"><i class="ui delete red icon"></i></a>
                 </div>

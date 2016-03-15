@@ -5,19 +5,12 @@
     <title></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <!-- build:css(.) styles/vendor.css -->
-    <!-- bower:css -->
-    <!-- endbower -->
-    <!-- endbuild -->
-    <!-- build:css(.tmp) styles/main.css -->
-    
+
     <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.css">
     
     <link rel="stylesheet" href="styles/main.css">
-    <!-- endbuild -->
   </head>
   <body ng-app="smartLearnIoApp" ng-controller="IndexCtrl">
     <!--[if lte IE 8]>
@@ -37,18 +30,8 @@
     
 
 
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
-     <!--<script>
-       !function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=l,A[l]=A[l]||function(){
-       (A[l].q=A[l].q||[]).push(arguments)},A[l].l=+new Date,a=n.createElement(g),
-       r=n.getElementsByTagName(g)[0],a.src=u,r.parentNode.insertBefore(a,r)
-       }(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-       ga('create', 'UA-XXXXX-X');
-       ga('send', 'pageview');
-    </script>-->
 
-    <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-animate/angular-animate.js"></script>
@@ -59,11 +42,10 @@
     <script src="bower_components/angular-touch/angular-touch.js"></script>
     <script src="bower_components/angular-cookie/angular-cookie.js"></script>
     <script src="bower_components/ng-token-auth/dist/ng-token-auth.js"></script>
-    <!-- endbower -->
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <!-- endbuild -->
 
-        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <!-- scripts -->
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/user_sessions.js"></script>
         <script src="scripts/controllers/main.js"></script>
@@ -71,6 +53,7 @@
         <script src="scripts/controllers/interim-test-mistakes.js"></script>
         <script src="scripts/controllers/mistakes.js"></script>
         <script src="scripts/controllers/teacher.js"></script>
+        <script src="scripts/controllers/profile.js"></script>
         
         <script src="scripts/directives/topnavbar/topnavbar.js"></script>
         <script src="scripts/directives/today/today.js"></script>
@@ -86,6 +69,9 @@
         <script src="scripts/services/question.js"></script>
         <script src="scripts/services/answer.js"></script>
         <script src="scripts/services/parse.js"></script>
+        <script src="scripts/services/classroom.js"></script>
+        <script src="scripts/services/user.js"></script>
+        <script src="scripts/services/objective.js"></script>
         <!-- endbuild -->
 </body>
 </html>

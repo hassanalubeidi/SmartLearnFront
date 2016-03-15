@@ -9,26 +9,14 @@
  * Service in the smartLearnIoApp.
  */
 angular.module('smartLearnIoApp')
-    .factory('Answer', function($http) {
-        var baseURL = 'http://127.0.0.1:3000/answers/';
-        
-        function createfindByQuery(clauses) {
-            var query = '?';
-            for(var clause in clauses) {
-                query += '&filter[' + clause + ']=' + clauses[clause];
-            }
-            return query;
-        }
-        
+    .factory('Objective', function($http) {
+        var baseURL = 'http://127.0.0.1:3000/objectives/';
         return {
             getAll: function() {
                 return $http.get(baseURL);
             },
             get: function(id) {
                 return $http.get(baseURL + id);
-            },
-            find: function(clauses) {
-                return $http.get(baseURL + createfindByQuery(clauses));
             },
             create: function(newProblem) {
                 $http.post({

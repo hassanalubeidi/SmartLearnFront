@@ -15,7 +15,7 @@ angular.module('smartLearnIoApp')
    function($scope, $http, $timeout, JsonAPI, Problem, Topic) {
        
       //Load Problems
-      $http.get("http://127.0.0.1:3000/problems").then(function(response) {
+      Problem.where({'user-id': $scope.user.id}).then(function(response) {
           $scope.problems = response.data.data.map(function(problem) {
               problem.attributes.id = problem.id
               return problem.attributes

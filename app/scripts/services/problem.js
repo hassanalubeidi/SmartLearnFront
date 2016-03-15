@@ -12,12 +12,63 @@ angular.module('smartLearnIoApp')
     .factory('Problem', function($http, Answer, $timeout) {
         var baseURL = 'http://127.0.0.1:3000/problems/';
         
+        function createSpecific(newInterim, index) {
+            var isLast = false
+            if (index == undefined) {
+                index = 0
+            }
+            
+            if (index == newInterim.length - 1){
+                isLast = true
+            }
+            var newAnswer = {
+                "marks": newInterim[index].marks,
+                "question-id" : newInterim[index].question_id,
+                "user-id": newInterim[index].user_id
+            }
+            var newProblem = {
+                "what-went-wrong":newInterim[index].problem['what-went-wrong'],
+                "topic-id":newInterim[index]['topic-id'],
+                "user-id": newInterim[index].user_id
+            }
+            
+            $http({
+                url: "http://127.0.0.1:3000/answers",
+                method:'POST',
+                headers: { 'Content-Type': 'application/vnd.api+json' },
+                data: {"data": {"type":"answers", "attributes": newAnswer}}
+            }).then(function(response) {
+                newProblem["answer-id"] = response.data.data.id
+                $http({
+                    url: baseURL, 
+                    method: "POST",
+                    headers: { 'Content-Type': 'application/vnd.api+json' },
+                    data: {"data": {"type":"problems", "attributes": newProblem } }
+                })
+            })
+            
+            if( isLast == false ) {
+                createSpecific(newInterim, index + 1) 
+            } 
+        }
+        
+        function createfindByQuery(clauses) {
+            var query = '?';
+            for(var clause in clauses) {
+                query += '&filter[' + clause + ']=' + clauses[clause];
+            }
+            return query;
+        }
+        
         return {
             getAll: function() {
                 return $http.get(baseURL);
             },
             get: function(id) {
                 return $http.get(baseURL + id);
+            },
+            where: function(clauses) {
+                return $http.get(baseURL + createfindByQuery(clauses));
             },
             create: function(newProblem) {
                 $http({
@@ -28,34 +79,7 @@ angular.module('smartLearnIoApp')
                 });
             },
             createSpecific: {
-               interimTest: function(newInterim) {
-                   console.log(newInterim)
-                var i
-                for (i = 0; i < newInterim.length; i++) {
-                    var newAnswer = {
-                        "marks": newInterim[i].marks,
-                        "question-id" : newInterim[i].question_id
-                    }
-                    var newProblem = {
-                        "what-went-wrong":newInterim[i].problem['what-went-wrong'],
-                        "topic-id":newInterim[i]['topic-id']
-                    }
-                    $http({
-                        url: "http://127.0.0.1:3000/answers",
-                        method:'POST',
-                        headers: { 'Content-Type': 'application/vnd.api+json' },
-                        data: {"data": {"type":"answers", "attributes": newAnswer}}
-                    }).then(function(response) {
-                        newProblem["answer-id"] = response.data.data.id
-                        $http({
-                            url: baseURL, 
-                            method: "POST",
-                            headers: { 'Content-Type': 'application/vnd.api+json' },
-                            data: {"data": {"type":"problems", "attributes": newProblem } }
-                        })
-                    })
-                }
-               }
+               interimTest: createSpecific
             },
             delete: function(id) {
                 $http({

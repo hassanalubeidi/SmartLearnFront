@@ -8,27 +8,9 @@
  * Controller of the smartLearnIoApp
  */
 angular.module('smartLearnIoApp')
-//   .controller('InterimTestMistakesController', ['$scope','$timeout', '$stateParams', 'TestPaper', 'JsonAPI',
-//    function ($scope, $stateParams, TestPaper, JsonAPI) {
-//     //  TestPaper.getAll()
-     
-     
-     
-     
-//      $scope.checkPosition = function() {
-//          if($scope.selectQuestionPosition !== undefined) {
-//             $scope.attachMarksVisible = true;
-//         }
-//      };
-//      $scope.checkMarks = function() {
-//          if($scope.newAnswer.marks > -1) {
-//             $scope.attachMistakesVisible = true;
-//         }
-//      };
-     
-//   }]);
-    .controller('InterimTestMistakesController', ['TestPaper', 'Question', 'Problem', '$scope', 'JsonAPI', '$stateParams', 
-        function(TestPaper, Question, Problem, $scope, JsonAPI, $stateParams) {
+    .controller('InterimTestMistakesController', ['TestPaper', 'Question', 'Problem', '$scope', '$rootScope', 'JsonAPI', '$stateParams', 
+        function(TestPaper, Question, Problem, $scope, $rootScope, JsonAPI, $stateParams) {
+            $scope.currentUser = $rootScope.user
             // Load testpaper
             TestPaper.get($stateParams.id).then(function(response){
                 $scope.testPaper = JsonAPI.pluckAttributes([response.data.data])[0];
@@ -63,6 +45,8 @@ angular.module('smartLearnIoApp')
             $scope.addAnswer = function(answer) {
                 answer['question_id'] = $scope.selectedQuestion.id;
                 answer['topic-id'] = $scope.selectedQuestion['topic-id'];
+                answer['user_id'] = $scope.currentUser.id
+                answer['user-id'] = $scope.currentUser.id
                 answer.position = $scope.selectedQuestion.position
                 answer.out_of = $scope.selectedQuestion['out-of']
                 $scope.newAnswers.push(answer);

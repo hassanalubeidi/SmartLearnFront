@@ -19,6 +19,7 @@ angular
     'ng-token-auth',
     'ui.router'
   ])
+  .constant('hostname', 'http://')
   .run(['$rootScope', '$location', function($rootScope, $location) {
     $rootScope.$on('auth:login-success', function() {
         $location.path('/');
@@ -28,15 +29,16 @@ angular
     });
   }])
   
-  .config(function ($routeProvider, $authProvider, $stateProvider, $httpProvider) {
+  .config(function ($routeProvider, $authProvider, $stateProvider, $httpProvider, $urlRouterProvider) {
     $httpProvider.defaults.headers.get = { 'Content-Type' : 'application/vnd.api+json' }
     $authProvider.configure({
         apiUrl: 'http://127.0.0.1:3000',
     });
+    $urlRouterProvider.otherwise('/');
     
     $stateProvider
       // this state will be visible to everyone
-      .state('index?wide', {
+      .state('index', {
         url: '/',
         controller: 'IndexCtrl',
         templateUrl: 'views/main.html',
@@ -81,6 +83,11 @@ angular
          templateUrl: 'views/mistakes/add/interim_test.html',
          controller: 'InterimTestMistakesController',
       })
+      .state('profile_show', {
+          url: '/profiles/:id',
+          templateUrl:'views/profile/show.html',
+          controller: 'ProfileCtrl'
+      })
       .state('signin', {
           url: '/sign_in',
           templateUrl: 'views/user_sessions/new.html'
@@ -95,6 +102,12 @@ angular
         templateUrl: 'views/subjects/show.html',
         controller: 'SubjectsCtrl',
         controllerAs: 'subjects'
+      })
+      .state('teacher_subject_show', {
+          url: '/subjects/:subject_id/user/:user_id',
+          templateUrl: 'views/teacher/subjects/show.html',
+          controller: 'SubjectsCtrl',
+          controllerAs: 'subjects'
       })
   })
   .filter('reverse', function() {

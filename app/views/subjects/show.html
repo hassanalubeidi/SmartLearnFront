@@ -2,7 +2,28 @@
     <div class="ui header">
         {{subject.title}}
     </div>
+    <div class="ui circular icon inverted button" ng-click="testPapersShow = !testPapersShow">Test papers <i class="ui down arrow icon"></i></div>
+    <div class="ui cards" style="margin-top:20px" ng-show="testPapersShow">
+        <div class="ui link card" ui-sref="teacher">
+            <div class="ui top indicating attached progress" data-percent="<%=  testpaper.tots(current_user)  %>">
+                <div class="bar" style="transition-duration: 300ms; width: <%=  testpaper.tots(current_user) %>%;"></div>
+            </div>
+            <div class="content">
+                <a><i class='right floated red remove icon'></i></a>
+                <div class="header">
+                   TPpapername
+                </div>
+                <div class="meta">
+                    Created 15 seconds ago
+                </div>
+                <div class="description">
+                    <div class="ui label">5/55</div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+    
 <div class="ui pointing secondary menu">
     <a ng-repeat="unit in units" ng-click="loadUnit(unit.id)" ng-class="{active: selectedUnitIndex == unit.id}" class="item" data-tab="first">{{unit.title}}</a>
 </div>
@@ -12,7 +33,7 @@
             <div class="item">
                 <div class="header">Topics</div>
                 <div class="menu">
-                    <a ng-repeat="topic in topics" ng-click="loadTopic(topic.id)" ng-class="{active: selectedTopicIndex == topic.id}" class="item">{{topic.title}} <span class="ui circular green label">{{topic.progress}}%</span></a>
+                    <a ng-repeat="topic in topics" ng-click="loadTopic(topic.id)" ng-class="{active: selectedTopicIndex == topic.id}" class="item">{{topic.title}} <span class="ui circular green label">{{topic.progress | number:0}}%</span></a>
                 </div>
                 <a class="popup" style="font-size:0.8em" data-content="Because you haven't been taught that material yet">Why are some topics striked out?</a>
             </div>
@@ -63,8 +84,11 @@
         
         <div class="ui segment">
             <div class="ui header">
-                Testpaper questions
-                <a href="#/testpapers/question" class="ui fluid circular button">Random question from this topic</a>
+                Objectives
+                
+            </div>
+            <div ng-repeat="objective in topic.objectives">
+                <a ng-click="getProgress($index)">{{objective.title}} {{objective.progress}}</a>
             </div>
         </div>
     </div>
