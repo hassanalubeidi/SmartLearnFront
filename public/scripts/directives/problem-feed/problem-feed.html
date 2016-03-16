@@ -1,0 +1,103 @@
+<div ng-controller="problemFeedController">
+    
+    <div style="padding-top:20px">
+        <span class="ui header">
+        Feed
+        </span>
+        
+        <a style="float:right" class="ui red circular icon button" ng-click="addProblemDialogVisible = !addProblemDialogVisible">
+            <i class="ui plus icon"></i>
+        </a>
+        <!--<div style="float:right" class="ui floating circular dropdown icon button">
+            <i class="filter icon"></i>
+            <div class="menu">
+                <div class="ui icon search input">
+                    <i class="search icon"></i> <input placeholder="Search tags..."
+                    type="text">
+                </div>
+                <div class="divider"></div>
+                <div class="header">
+                    <i class="tags icon"></i> Tag Label
+                </div>
+                <div class="scrolling menu">
+                    <div class="item">
+                        <div class="ui red empty circular label"></div>Important
+                    </div>
+                    <div class="item">
+                        <div class="ui blue empty circular label">
+                        </div>Announcement
+                    </div>
+                    <div class="item">
+                        <div class="ui black empty circular label"></div>Cannot Fix
+                    </div>
+                    <div class="item">
+                        <div class="ui purple empty circular label"></div>News
+                    </div>
+                    <div class="item">
+                        <div class="ui orange empty circular label">
+                        </div>Enhancement
+                    </div>
+                    <div class="item">
+                        <div class="ui empty circular label"></div>Change Declined
+                    </div>
+                    <div class="item">
+                        <div class="ui yellow empty circular label"></div>Off Topic
+                    </div>
+                    <div class="item">
+                        <div class="ui pink empty circular label"></div>Interesting
+                    </div>
+                    <div class="item">
+                        <div class="ui green empty circular label"></div>Discussion
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="float:right" class="ui floating circular icon button" >
+            <i class="ui search icon"></i>
+        </div>-->
+    </div>
+
+    <div class="ui segment form" ng-show="addProblemDialogVisible">
+        <div class="ui field">
+            <label>Topic:</label>
+            <div class="ui topic search">
+                <div class="ui icon input">
+                    <input class="prompt" type="text" placeholder="Search topics..." ng-model="newProblem.topic">
+                    <i class="search icon"></i>
+                </div>
+                <div class="results"></div>
+            </div>
+        </div>
+        <div class="ui field">
+            <label>What went wrong?</label>
+            <textarea ng-model="newProblem.what_went_wrong"></textarea>
+        </div>
+        
+        <div class="ui field">
+            <div class="ui red button" ng-click="createProblem(newProblem)">Add problem</div>
+        </div>
+    </div>
+
+    
+
+    <div class="ui feed segment">
+        <div class="event" ng-repeat="problem in problems | reverse" style="margin-bottom:15px">
+            <div class="content">
+                <div class="summary">
+                    <a ui-sref="mistakes({id:problem.id})">{{problem["what-went-wrong"]}}</a>
+                    <span class="ui tiny circular button" style="float:right">Review</span>
+                    <div class="date">
+                        12 Hours ago
+                    </div>
+                </div>
+                <div class="meta">
+                    <a class="ui small label">{{problem.topic.title}}</a>
+                    <a class="like">
+                        0 reviews
+                    </a>
+                    <a ng-click="removeProblem(problems, ((problems.length - 1) - $index))"><i class="ui delete red icon"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

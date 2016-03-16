@@ -1,0 +1,21 @@
+<div class="ui form">
+    <div class="ui field">
+        <label>Title</label>
+        <input type="text" ng-model="newTestPaper.title">
+    </div>
+    <div class="field">
+        <label>Subject</label>
+        <select class="ui dropdown" ng-model="newTestPaper.subject_id">
+            <option value="">Select subject</option>
+            <option ng-repeat="subject in subjects" value="{{subject.id}}">{{subject.title}}</option>
+        </select>
+    </div>
+    <div class="ui field">
+        <label>Testpaper Url (Only accepts OCR)</label>
+        <input type="text" ng-model="newTestPaper.url">
+    </div>
+    <div class="ui button" ng-click="createTestPaper(newTestPaper)">Create Questions</div>
+</div>
+<script>
+    $(".dropdown").dropdown()
+</script>

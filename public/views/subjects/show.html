@@ -1,0 +1,100 @@
+<div class="ui secondary inverted blue segment" style="margin-top:20px">
+    <div class="ui header">
+        {{subject.title}}
+    </div>
+    <div class="ui circular icon inverted button" ng-click="testPapersShow = !testPapersShow">Test papers <i class="ui down arrow icon"></i></div>
+    <div class="ui cards" style="margin-top:20px" ng-show="testPapersShow">
+        <div class="ui link card" ui-sref="teacher">
+            <div class="ui top indicating attached progress" data-percent="<%=  testpaper.tots(current_user)  %>">
+                <div class="bar" style="transition-duration: 300ms; width: <%=  testpaper.tots(current_user) %>%;"></div>
+            </div>
+            <div class="content">
+                <a><i class='right floated red remove icon'></i></a>
+                <div class="header">
+                   TPpapername
+                </div>
+                <div class="meta">
+                    Created 15 seconds ago
+                </div>
+                <div class="description">
+                    <div class="ui label">5/55</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    
+<div class="ui pointing secondary menu">
+    <a ng-repeat="unit in units" ng-click="loadUnit(unit.id)" ng-class="{active: selectedUnitIndex == unit.id}" class="item" data-tab="first">{{unit.title}}</a>
+</div>
+<div class="ui stackable grid" ng-show="selectedUnitIndex">
+    <div class="ui four wide column">
+        <div class="ui large vertical fluid pointing menu">
+            <div class="item">
+                <div class="header">Topics</div>
+                <div class="menu">
+                    <a ng-repeat="topic in topics" ng-click="loadTopic(topic.id)" ng-class="{active: selectedTopicIndex == topic.id}" class="item">{{topic.title}} <span class="ui circular green label">{{topic.progress | number:0}}%</span></a>
+                </div>
+                <a class="popup" style="font-size:0.8em" data-content="Because you haven't been taught that material yet">Why are some topics striked out?</a>
+            </div>
+            
+            </div>
+    </div>
+    <div class="ui twelve wide column" ng-show="!selectedTopicIndex">
+        <div class="ui  segment">
+            Select topic
+        </div>
+    </div>
+    <div class="ui twelve wide column" ng-show="selectedTopicIndex">
+        <div class="ui segment header">
+            {{topic.title}}
+        </div>
+        <!--<div class="ui segment">
+            <div class="ui header">
+                Module Pack
+            </div>
+            <div class="ui dimmable basic segment">
+                    <div class="ui inverted dimmer">
+                        <div class="content">
+                        <div class="center">
+                            <div class="ui blue button">Take me to this topic's knowledge pack</div>
+                        </div>
+                        </div>
+                </div>
+                <div class="ui blue inverted top attached menu">
+                    <a class="ui item" style="width:20%">
+                        <i class="ui left arrow icon"></i>
+                    </a>
+                    <a class="ui item" style="width:60%;">
+                        <span style="margin:auto">Obj title <i class="ui dropdown icon"></i></span>
+                    </a>
+                    <a class="ui item" style="width:20%">
+                            <i class="ui right arrow icon"></i>
+                    </a>
+                </div>
+                <div class="ui bottom attached segment form">
+                    <div class="ui header">
+                        Define the term spontaneous reaction
+                    </div>
+                    <textarea></textarea>
+                </div>
+            </div>
+            
+        </div>-->
+        
+        <div class="ui segment">
+            <div class="ui header">
+                Objectives
+                
+            </div>
+            <div ng-repeat="objective in topic.objectives">
+                <a ng-click="getProgress($index)">{{objective.title}} {{objective.progress}}</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+$('.segment .dimmable').dimmer('show');
+$(".popup").popup()
+</script>

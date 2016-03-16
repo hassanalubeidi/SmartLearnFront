@@ -1,0 +1,8 @@
+<segment-header>Report: {{profile.user.attributes.email}}</segment-header>
+<div class="ui inverted blue top attached  menu">
+  <a class="item" ng-repeat="subject in profile.subjects" ng-class="{active: selectedSubjectIndex == $index}" ng-click="selectedSubjectIndex = $index">
+    {{subject.title}}
+  </a>
+</div>
+<div class="ui bottom attached segment">
+</div>
