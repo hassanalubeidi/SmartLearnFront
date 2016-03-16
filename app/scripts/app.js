@@ -19,7 +19,7 @@ angular
     'ng-token-auth',
     'ui.router'
   ])
-  .constant('hostname', 'http://')
+  .constant('apiBaseUrl', 'http://api.smartlearn.io')
   .run(['$rootScope', '$location', function($rootScope, $location) {
     $rootScope.$on('auth:login-success', function() {
         $location.path('/');
@@ -28,14 +28,12 @@ angular
         $location.path('/sign_in');
     });
   }])
-  
-  .config(function ($routeProvider, $authProvider, $stateProvider, $httpProvider, $urlRouterProvider) {
-    $httpProvider.defaults.headers.get = { 'Content-Type' : 'application/vnd.api+json' }
+  .config(function($routeProvider, $authProvider, $stateProvider, $httpProvider, $urlRouterProvider, apiBaseUrl) {
+    //$httpProvider.defaults.headers.get = { 'Content-Type' : 'application/vnd.api+json' }
     $authProvider.configure({
-        apiUrl: 'http://127.0.0.1:3000',
+        apiUrl: apiBaseUrl,
     });
     $urlRouterProvider.otherwise('/');
-    
     $stateProvider
       // this state will be visible to everyone
       .state('index', {

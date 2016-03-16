@@ -9,8 +9,8 @@
  * Service in the smartLearnIoApp.
  */
 angular.module('smartLearnIoApp')
-    .factory('Problem', function($http, Answer, $timeout) {
-        var baseURL = 'http://127.0.0.1:3000/problems/';
+    .factory('Problem', function($http, Answer, $timeout, apiBaseUrl) {
+        var baseURL = apiBaseUrl + '/problems/';
         
         function createSpecific(newInterim, index) {
             var isLast = false
@@ -33,7 +33,7 @@ angular.module('smartLearnIoApp')
             }
             
             $http({
-                url: "http://127.0.0.1:3000/answers",
+                url: apiBaseUrl + "/answers",
                 method:'POST',
                 headers: { 'Content-Type': 'application/vnd.api+json' },
                 data: {"data": {"type":"answers", "attributes": newAnswer}}

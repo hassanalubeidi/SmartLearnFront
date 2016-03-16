@@ -8,9 +8,9 @@
  * Factory in the smartLearnIoApp.
  */
 angular.module('smartLearnIoApp')
-    .factory('Topic', function($http) {
-        var baseURL = 'http://127.0.0.1:3000/topics/';
-        
+    .factory('Topic', function($http, apiBaseUrl) {
+        var baseURL = apiBaseUrl + '/topics/';
+
         function createfindByQuery(clauses) {
             var query = '?';
             for(var clause in clauses) {

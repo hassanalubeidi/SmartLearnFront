@@ -8,8 +8,8 @@
  * Service in the smartLearnIoApp.
  */
 angular.module('smartLearnIoApp')
-    .factory('TestPaper', function($http, Parse) {
-        var baseURL = 'http://127.0.0.1:3000/test-papers/';
+    .factory('TestPaper', function($http, Parse, apiBaseUrl) {
+        var baseURL = apiBaseUrl + '/test-papers/';
         return {
             getAll: function() {
                 return $http.get(baseURL);

@@ -9,8 +9,8 @@
  * Service in the smartLearnIoApp.
  */
 angular.module('smartLearnIoApp')
-    .factory('Classroom', function($http) {
-        var baseURL = 'http://127.0.0.1:3000/classrooms/';
+    .factory('Classroom', function($http, apiBaseUrl) {
+        var baseURL = apiBaseUrl + '/classrooms/';
         return {
             getAll: function() {
                 return $http.get(baseURL);

@@ -9,8 +9,8 @@
  * Service in the smartLearnIoApp.
  */
 angular.module('smartLearnIoApp')
-    .factory('Answer', function($http) {
-        var baseURL = 'http://127.0.0.1:3000/answers/';
+    .factory('Answer', function($http, apiBaseUrl) {
+        var baseURL = apiBaseUrl + '/answers/';
         
         function createfindByQuery(clauses) {
             var query = '?';

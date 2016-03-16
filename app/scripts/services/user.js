@@ -8,8 +8,8 @@
  * Factory in the smartLearnIoApp.
  */
 angular.module('smartLearnIoApp')
-    .factory('User', function($http) {
-        var baseURL = 'http://127.0.0.1:3000/users/';
+    .factory('User', function($http, apiBaseUrl) {
+        var baseURL = apiBaseUrl + '/users/';
         //
         return {
             getAll: function() {

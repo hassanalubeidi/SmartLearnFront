@@ -11,8 +11,8 @@ angular.module('smartLearnIoApp')
       restrict: 'E'
     };
   })
-  .controller('problemFeedController', ['$scope','$http', '$timeout','JsonAPI', 'Problem', 'Topic',
-   function($scope, $http, $timeout, JsonAPI, Problem, Topic) {
+  .controller('problemFeedController', ['$scope','$http', '$timeout','JsonAPI', 'Problem', 'Topic', 'apiBaseUrl',
+   function($scope, $http, $timeout, JsonAPI, Problem, Topic, apiBaseUrl) {
        
       //Load Problems
       Problem.where({'user-id': $scope.user.id}).then(function(response) {
@@ -28,7 +28,7 @@ angular.module('smartLearnIoApp')
           // Find topic by name
           var topic_name = $(".topic.search").search("get value")
           console.log(topic_name)
-          $http.get("http://127.0.0.1:3000/topics?filter[title]="+topic_name).then(function(response) {
+          $http.get(apiBaseUrl + "/topics?filter[title]="+topic_name).then(function(response) {
               $timeout(function() {
                 topic_id = response.data.data[0].id
                 console.log(topic_id)
@@ -50,7 +50,7 @@ angular.module('smartLearnIoApp')
           //Post JSONAPI data
           $timeout(function() {
               $http({
-                    url: 'http://127.0.0.1:3000/problems',
+                    url: apiBaseUrl + '/problems',
                     method: 'POST',
                     headers: { 'Content-Type': 'application/vnd.api+json' },
                     data: data
@@ -72,7 +72,7 @@ angular.module('smartLearnIoApp')
          
       }
       // Get topics for problem-feed search bar
-      $http.get("http://127.0.0.1:3000/topics").then(function(response) {
+      $http.get(apiBaseUrl + "/topics").then(function(response) {
           $scope.topics = response.data;
           $scope.topics = JsonAPI.pluckAttributes($scope.topics.data);
           
