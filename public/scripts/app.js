@@ -29,7 +29,8 @@ angular
     });
   }])
   .config(function($routeProvider, $authProvider, $stateProvider, $httpProvider, $urlRouterProvider, apiBaseUrl) {
-    //$httpProvider.defaults.headers.get = { 'Content-Type' : 'application/vnd.api+json' }
+    // Only consume JSON API
+    //$httpProvider.defaults.headers.get = { 'Accept' : 'application/vnd.api+json' }
     $authProvider.configure({
         apiUrl: apiBaseUrl,
     });

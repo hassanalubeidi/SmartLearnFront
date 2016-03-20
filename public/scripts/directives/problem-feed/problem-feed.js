@@ -17,21 +17,25 @@ angular.module('smartLearnIoApp')
       //Load Problems
       Problem.where({'user-id': $scope.user.id}).then(function(response) {
           $scope.problems = response.data.data.map(function(problem) {
-              problem.attributes.id = problem.id
-              return problem.attributes
-          })
+              problem.attributes.id = problem.id;
+              return problem.attributes;
+          });
+	  console.log("Problems fetched for user id: " + $scope.user.id);
+	  console.log($scope.problems);
       })
       // create Problem
       $scope.createProblem = function(newProblem) {
-          var topic_id
-          var data
+          var topic_id;
+          var data;
           // Find topic by name
-          var topic_name = $(".topic.search").search("get value")
-          console.log(topic_name)
-          $http.get(apiBaseUrl + "/topics?filter[title]="+topic_name).then(function(response) {
+          var topic_name = $(".topic.search").search("get value");
+          console.log(topic_name);
+          $http.get(apiBaseUrl + "/topics?filter[title]=" + topic_name).then(function(response) {
               $timeout(function() {
-                topic_id = response.data.data[0].id
-                console.log(topic_id)
+		console.log("bla");
+		console.log(response);
+                topic_id = response.data.data[0].id;
+                console.log(topic_id);
               }, 300)
           })
           
@@ -39,13 +43,13 @@ angular.module('smartLearnIoApp')
           $timeout(function() {
             data = {
                     "data": {
-                        "type":"problems",
+                        "type": "problems",
                         "attributes": {
                             "topic-id": topic_id,
                             "what-went-wrong": newProblem.what_went_wrong
                         }
                     }
-            }},400)
+            }}, 400)
           
           //Post JSONAPI data
           $timeout(function() {
@@ -73,16 +77,24 @@ angular.module('smartLearnIoApp')
       }
       // Get topics for problem-feed search bar
       $http.get(apiBaseUrl + "/topics").then(function(response) {
-          $scope.topics = response.data;
-          $scope.topics = JsonAPI.pluckAttributes($scope.topics.data);
+
+          $scope.topics = JsonAPI.pluckAttributes(response.data.data);
+
+	  console.log("Topics received");
+	  console.log($scope.topics);
+
+          $('.ui.search')
+            .search({
+                source: $scope.topics
+           });
           
       });
       // Initialize Semantic UI search with topics
-      $timeout(function() {
+      /*$timeout(function() {
            $('.ui.search')
             .search({
                 source: $scope.topics
             });
-      }, 1000)
+      }, 1000)*/
      
   }]);
