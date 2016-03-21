@@ -14,7 +14,7 @@
         <input type="number" min="0" ng-max="{{selectedQuestion.marks}}" ng-model="newAnswer.marks" ng-change="checkMarks()">/{{selectedQuestion['out-of']}}
     </div>
     <div class="ui padded segment" ng-show="attachMistakesVisible">
-        {{thisWorks}} {{user}}
+        <!-- {{thisWorks}} {{user}} -->
         Keep track of your mistakes
         
         <div class="field">
@@ -30,7 +30,7 @@
     <div class="ui segment" ng-show="newAnswers.length > 0">
         Where you've dropped marks so far:
         <ul>
-            <li ng-repeat="answer in newAnswers">{{answer.position}}: {{answer.marks}}/{{answer.out_of}} | {{answer.problem['what-went-wrong']}}| | | {{answer}}</li>
+            <li ng-repeat="answer in newAnswers">{{answer.position}}: {{answer.marks}}/{{answer.out_of}}</li>
         </ul>
     </div>
     <div class="ui fluid button" ng-click="setAsFinsihed()">I've finished entering my errors</div>
