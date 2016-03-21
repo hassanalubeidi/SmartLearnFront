@@ -16,7 +16,8 @@ angular.module('smartLearnIoApp')
       // Load Problems
       Problem.where({'user-id': $scope.user.id}).then(function(response) {
           $scope.problems = response.data.data.map(function(problem) {
-              //problem.attributes.id = problem.id;
+	      // TODO: Fix this
+              problem.attributes.id = problem.id;
               return problem.attributes;
           });
 	  console.log("Problems fetched for user id: " + $scope.user.id);
@@ -54,6 +55,8 @@ angular.module('smartLearnIoApp')
                     headers: { 'Content-Type': 'application/vnd.api+json' },
                     data: payload
 		}).then(function(problemResponse) {
+			// TODO: This is an ugly fix
+			//problemResponse.data.data.attributes.id = $scope.problems[$scope.problems.length - 1].id + 1;
 			$scope.problems.push(problemResponse.data.data.attributes);
 		});
 		//payload.data.attributes.id = $scope.problems[$scope.problems.length - 1].id + 1
