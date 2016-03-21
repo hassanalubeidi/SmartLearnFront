@@ -27,7 +27,7 @@ angular.module('smartLearnIoApp')
       $scope.createProblem = function(newProblem) {
           // Find topic by name
 	  // Use index 1, because of weird array issue
-          var topic_name = $(".topic.search").search("get value")[1];
+          var topic_name = '"' + $(".topic.search").search("get value")[1] + '"';
           console.log("The topic name from the search is: ");
 	  console.log(topic_name);
 
@@ -35,7 +35,8 @@ angular.module('smartLearnIoApp')
 
 		console.log("Response: ");
 		console.log(response);
-                var topic_id = response.data.data[0].id;
+
+		var topic_id = response.data.data[0].id;
                 console.log("Topic id: " + topic_id);
 
 		var payload = {
