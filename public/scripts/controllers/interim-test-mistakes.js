@@ -36,9 +36,11 @@ angular.module('smartLearnIoApp')
             
             // Checks if Marks have been inputted
             $scope.checkMarks = function() {
-                if($scope.newAnswer.marks > -1) {
-                    $scope.attachMistakesVisible = true;
-                }
+                if($scope.newAnswer.marks > -1 && $scope.newAnswer.marks < $scope.selectedQuestion['out-of']) {
+                    $scope.attachMistakesVisible = true
+                }else {
+			$scope.attachMistakesVisible = false
+		}
             };
             
             // Adds answer to newAnswers array, ready to be sent to API
