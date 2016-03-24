@@ -1,0 +1,9 @@
+<today>
+    <a ng-repeat="testPaper in testPapers"
+         ui-sref="interim_test_mistakes({id: testPaper.id})"
+         class="ui basic inverted circular button">
+        {{testPaper.title}} <span ng-show="testPaper.total"> | {{testPaper.total}} / 100</span>
+    </a>
+    
+</today>
+<problem-feed></problem-feed>

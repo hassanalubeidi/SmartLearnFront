@@ -1,0 +1,65 @@
+
+<segment-header>Teacher</segment-header>
+<div class="ui circular icon red button" style="margin: 10px 0px 10px 0px" ng-click="addClassroomDialogVisible = !addClassroomDialogVisible" ng-show="!addClassroomDialogVisible">Add Classroom <i class="ui plus icon"></i></div>
+<div class="ui segment" ng-show="addClassroomDialogVisible"  style="margin-bottom:25px;">
+    <div class="ui header">Add a class</div>
+    <div class="ui form">
+        <div class="ui field">
+            <label>Classroom title</label>
+            <input type="text" ng-model="newClassroom.title">
+        </div>
+        <div class="ui field">
+            <label>Subject</label>
+            <select class="ui dropdown" ng-model="newClassroom.subject">
+                <option value="">Select subject</option>
+                <option ng-repeat="subject in subjects" value="{{subject.id}}">{{subject.title}}</option>
+            </select>
+        </div>
+        <div class="ui field">
+            <label>Year group</label>
+            <select class="ui dropdown" ng-model="newClassroom['year-group']">
+                <option value="">Select year group</option>
+                <option value="12">Year 12</option>
+                <option value="13">Year 13</option>
+            </select>
+        </div>
+        <div class="ui field">
+            <label>Students in class</label>
+            <select multiple="" class="ui search dropdown" ng-model="newClassroom.users">
+                <option value="">Select students</option>
+                <option value="1">Bob</option>
+                <option value="2">Fin</option>
+                <option value="3">Albert</option>
+            </select>
+        </div>
+        <div class="ui field">
+            <div ng-click="addClassroomDialogVisible = !addClassroomDialogVisible; createClassroom(newClassroom)" class="ui red circular icon button button" style="float:right">Submit <i class="ui checkmark icon"></i></div>
+            <div ng-click="addClassroomDialogVisible = !addClassroomDialogVisible" class="ui circular icon button button" style="float:right">Cancel <i class="ui delete icon"></i></div>
+        </div>
+    </div>
+    
+</div>
+<div class="ui three stackable cards">
+    <div ng-repeat="classroom in classrooms" class="ui card">
+        <div class="content">
+        <div class="header">{{classroom.title}}</div>
+        <div class="meta">Classroom</div>
+        <div class="description">
+            {{classroom.users.length}} students
+            <!--<div style="margin: 10px 0px 10px 0px;">
+                <strong>Currently on: </strong><div class="ui label">Atoms</div>
+            </div>-->
+            <div class="ui fluid button" ng-click="deatilViewActive = true" ng-show="!deatilViewActive">Detail</div>
+            <div class="ui segment" ng-show="deatilViewActive">
+                <div class="ui divided list">
+                    <a ui-sref="profile" class="ui item" ng-repeat="user in classroom.users">{{user.uid}}</a>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    
+</div>
+<script>
+    $(".dropdown").dropdown()
+</script>

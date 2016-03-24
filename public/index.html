@@ -1,0 +1,143 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <script src="https://code.jquery.com/jquery-2.2.2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.css">
+    
+    <link rel="stylesheet" href="styles/main.css">
+  </head>
+
+  <body ng-app="smartLearnIoApp" ng-controller="IndexCtrl">
+    
+    <div ng-show="!user.id">
+	<div class="ui text container" ng-show="!register">
+    		<segment-header style="padding: 20px;">
+      		  Sign in
+    		</segment-header>
+    		<form ng-submit="submitLogin(loginForm)" role="form" ng-init="loginForm = {}" class="ui segment form" style="margin-top:-10px">
+        		<div class="form-group">
+            		<label for="email">Email</label>
+           		 <input type="email"
+                		name="email"
+                		id="email"
+                		ng-model="loginForm.email"
+               			required="required"
+                		class="form-control">
+        </div>
+
+        	<div class="form-group">
+            		<label for="password">Password</label>
+            		<input type="password"
+                		name="password"
+                		id="password"
+                		ng-model="loginForm.password"
+                		required="required"
+                		class="form-control">
+        	</div>
+
+        	<button style="margin-top:20px" class="ui red button" type="submit">Sign in</button>
+        	<a style="margin-top:20px" class="ui button" ng-click="register=true">Sign up</a>
+    	</form> 
+	</div>
+
+
+	<div class="ui text container" ng-controller="UserSessionsCtrl" ng-show="register">
+    		<segment-header style="padding: 20px;">
+        		Sign up
+    		</segment-header>
+    		<form ng-submit="handleRegBtnClick()" role="form" ng-init="registrationForm = {}" class="ui segment form">
+    			<div class="form-group">
+        			<label for="email">Email</label>
+        			<input type="email"
+            				name="email"
+            				id="email"
+            				ng-model="registrationForm.email"
+            				required="required"
+            				class="form-control">
+    			</div>
+
+    			<div class="form-group">
+        			<label for="password">Password</label>
+        			<input type="password"
+            				name="password"
+            				id="password"
+            				ng-model="registrationForm.password"
+            				required="required"
+            				class="form-control">
+    			</div>
+
+    			<div class="form-group">
+        			<label for="password_confirmation">Password confirmation</label>
+        			<input type="password"
+            				name="password_confirmation"
+            				id="password_confirmation"
+            				ng-model="registrationForm.password_confirmation"
+            				required="required"
+            				class="form-control">
+    			</div>
+
+    			<button type="submit" class="ui red button" style="margin-top:20px">Register</button>
+			<a class="ui button" ng-click="register=false" style="margin-top:20px;">Cancel</a>
+    		</form>
+	</div>
+    </div>
+    <div ng-show="user.id"><a ng-click='signOut()'></a>
+        <top-navbar></top-navbar>
+        <div class="ui container" style="margin-top:20px" ng-class="{text : !wide}">
+            <div ui-view></div>
+        </div>
+    </div>
+    
+
+
+
+
+    <!-- bower:js -->
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/angular-cookie/angular-cookie.js"></script>
+    <script src="bower_components/ng-token-auth/dist/ng-token-auth.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <!-- endbuild -->
+
+        <!-- scripts -->
+        <script src="scripts/app.js"></script>
+        <script src="scripts/controllers/user_sessions.js"></script>
+        <script src="scripts/controllers/main.js"></script>
+        <script src="scripts/controllers/subjects.js"></script>
+        <script src="scripts/controllers/interim-test-mistakes.js"></script>
+        <script src="scripts/controllers/mistakes.js"></script>
+        <script src="scripts/controllers/teacher.js"></script>
+        <script src="scripts/controllers/profile.js"></script>
+        
+        <script src="scripts/directives/topnavbar/topnavbar.js"></script>
+        <script src="scripts/directives/today/today.js"></script>
+        <script src="scripts/directives/problem-feed/problem-feed.js"></script>
+        <script src="scripts/directives/segment-header/segment-header.js"></script>
+        <script src="scripts/directives/back-button/back-button.js"></script>
+        
+        <script src="scripts/services/problem.js"></script>
+        <script src="scripts/services/json-api.js"></script>
+        <script src="scripts/services/topic.js"></script>
+        <script src="scripts/services/subject.js"></script>
+        <script src="scripts/services/test-paper.js"></script>
+        <script src="scripts/services/question.js"></script>
+        <script src="scripts/services/answer.js"></script>
+        <script src="scripts/services/parse.js"></script>
+        <script src="scripts/services/classroom.js"></script>
+        <script src="scripts/services/user.js"></script>
+        <script src="scripts/services/objective.js"></script>
+        <!-- endbuild -->
+</body>
+</html>

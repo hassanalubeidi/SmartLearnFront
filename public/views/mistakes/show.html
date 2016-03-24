@@ -1,0 +1,8 @@
+<back-button></back-button>
+<div class="ui secondary blue inverted segment">
+    <div class="ui header">
+        {{problem["what-went-wrong"]}}
+        
+    </div>
+    <a class="ui label">{{problem.topic.subject.title}}</a><a class="ui label">{{problem.topic.unit.title}}</a><a class="ui label">{{problem.topic.title}}</a><a class="ui label" ng-show="problem.question.objectives.length > 0">{{problem.question.objectives[0].title}}</a><a ng-show="problem.answer" class="ui image label">{{problem.question['test-paper'].title}} | {{problem.question.position}} <div class="detail">{{problem.answer.marks}}/{{problem.question['out-of']}}</div></a>
+</div>
