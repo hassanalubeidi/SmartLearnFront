@@ -6,20 +6,86 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
 
-    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.css">
+    <script src="https://code.jquery.com/jquery-2.2.2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.css">
     
     <link rel="stylesheet" href="styles/main.css">
   </head>
-  <body ng-app="smartLearnIoApp" ng-controller="IndexCtrl">
-    <!--[if lte IE 8]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
 
-    <!-- Add your site or application content here -->
+  <body ng-app="smartLearnIoApp" ng-controller="IndexCtrl">
+    
     <div ng-show="!user.id">
-        <div ui-view></div>
+	<div class="ui text container" ng-show="!register">
+    		<segment-header style="padding: 20px;">
+      		  Sign in
+    		</segment-header>
+    		<form ng-submit="submitLogin(loginForm)" role="form" ng-init="loginForm = {}" class="ui segment form" style="margin-top:-10px">
+        		<div class="form-group">
+            		<label for="email">Email</label>
+           		 <input type="email"
+                		name="email"
+                		id="email"
+                		ng-model="loginForm.email"
+               			required="required"
+                		class="form-control">
+        </div>
+
+        	<div class="form-group">
+            		<label for="password">Password</label>
+            		<input type="password"
+                		name="password"
+                		id="password"
+                		ng-model="loginForm.password"
+                		required="required"
+                		class="form-control">
+        	</div>
+
+        	<button style="margin-top:20px" class="ui red button" type="submit">Sign in</button>
+        	<a style="margin-top:20px" class="ui button" ng-click="register=true">Sign up</a>
+    	</form> 
+	</div>
+
+
+	<div class="ui text container" ng-controller="UserSessionsCtrl" ng-show="register">
+    		<segment-header style="padding: 20px;">
+        		Sign up
+    		</segment-header>
+    		<form ng-submit="handleRegBtnClick()" role="form" ng-init="registrationForm = {}" class="ui segment form">
+    			<div class="form-group">
+        			<label for="email">Email</label>
+        			<input type="email"
+            				name="email"
+            				id="email"
+            				ng-model="registrationForm.email"
+            				required="required"
+            				class="form-control">
+    			</div>
+
+    			<div class="form-group">
+        			<label for="password">Password</label>
+        			<input type="password"
+            				name="password"
+            				id="password"
+            				ng-model="registrationForm.password"
+            				required="required"
+            				class="form-control">
+    			</div>
+
+    			<div class="form-group">
+        			<label for="password_confirmation">Password confirmation</label>
+        			<input type="password"
+            				name="password_confirmation"
+            				id="password_confirmation"
+            				ng-model="registrationForm.password_confirmation"
+            				required="required"
+            				class="form-control">
+    			</div>
+
+    			<button type="submit" class="ui red button" style="margin-top:20px">Register</button>
+			<a class="ui button" ng-click="register=false" style="margin-top:20px;">Cancel</a>
+    		</form>
+	</div>
     </div>
     <div ng-show="user.id"><a ng-click='signOut()'></a>
         <top-navbar></top-navbar>
