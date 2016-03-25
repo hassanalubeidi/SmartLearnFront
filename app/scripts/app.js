@@ -30,7 +30,7 @@ angular
   }])
   .config(function($routeProvider, $authProvider, $stateProvider, $httpProvider, $urlRouterProvider, apiBaseUrl) {
     // Only consume JSON API
-    $httpProvider.defaults.headers.get = { 'Accept' : 'application/vnd.api+json' }
+    //$httpProvider.defaults.headers.get = { 'Accept' : 'application/vnd.api+json' }
     $authProvider.configure({
         apiUrl: apiBaseUrl,
     });
