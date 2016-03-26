@@ -12,24 +12,16 @@ angular.module('smartLearnIoApp')
     .factory('Problem', function($http, Answer, $timeout, apiBaseUrl) {
         var baseURL = apiBaseUrl + '/problems/';
         
-        function createSpecific(newInterim, index) {
-            var isLast = false
-            if (index == undefined) {
-                index = 0
-            }
-            
-            if (index == newInterim.length - 1){
-                isLast = true
-            }
+        function createAnswerProblem(newAnswerProblem) {
             var newAnswer = {
-                "marks": newInterim[index].marks,
-                "question-id" : newInterim[index].question_id,
-                "user-id": newInterim[index].user_id
+                "marks": newAnswerProblem.marks,
+                "question-id" : newAnswerProblem.question_id,
+                "user-id": newAnswerProblem.user_id
             }
             var newProblem = {
-                "what-went-wrong":newInterim[index].problem['what-went-wrong'],
-                "topic-id":newInterim[index]['topic-id'],
-                "user-id": newInterim[index].user_id
+                "what-went-wrong":newAnswerProblem.problem['what-went-wrong'],
+                "topic-id":newAnswerProblem['topic-id'],
+                "user-id": newAnswerProblem.user_id
             }
             
             $http({
@@ -46,10 +38,6 @@ angular.module('smartLearnIoApp')
                     data: {"data": {"type":"problems", "attributes": newProblem } }
                 })
             })
-            
-            if( isLast == false ) {
-                createSpecific(newInterim, index + 1) 
-            } 
         }
         
         function createfindByQuery(clauses) {
@@ -78,11 +66,9 @@ angular.module('smartLearnIoApp')
                         data: newProblem
                 });
             },
-            createSpecific: {
-               interimTest: createSpecific
-            },
+            createAnswerProblem: createAnswerProblem,
             delete: function(id) {
-                $http({
+                return $http({
                         url: baseURL + id,
                         method: 'DELETE',
                         headers: { 'Content-Type': 'application/vnd.api+json' }
