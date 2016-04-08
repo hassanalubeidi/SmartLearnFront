@@ -120,7 +120,7 @@
                         <a><i ng-click="showDeleteDialog = true" class="ui delete red link icon"></i></a>
                     </div>
                     <div ng-show="!$last" style="margin-bottom: 20px"></div>
-                    <div ng-show="$last && problem['test-paper'] != null" style="padding-bottom: 30px;"></div>
+                    <div ng-show="$last && problem['test-paper'] != null && problemGroup.all.length > problemGroup.minimized.length" style="padding-bottom: 30px;"></div>
                     <!--<div class="ui divider" ng-show="!$last"></div>-->
                     
                 </div>
@@ -211,6 +211,9 @@
     }
     .ui.divider {
         margin: 0.5rem 0rem;
+    }
+    .ui.top.attached.label:first-child + :not(.attached) {
+        margin-top: 0.8rem !important;
     }
     
 </style>
