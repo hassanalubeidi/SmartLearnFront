@@ -6,7 +6,7 @@
         </span>
         
         <a style="float:right" class="ui red circular icon button" ng-click="addProblemDialogVisible = !addProblemDialogVisible">
-            <i class="ui plus icon"></i>
+            <i class="ui icon" ng-class="{plus: !addProblemDialogVisible, delete: addProblemDialogVisible}"></i>
         </a>
         <!--<div style="float:right" class="ui floating circular dropdown icon button">
             <i class="filter icon"></i>
