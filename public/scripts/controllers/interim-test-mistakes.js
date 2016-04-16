@@ -48,7 +48,7 @@ angular.module('smartLearnIoApp')
                 answer['user-id'] = $scope.currentUser.id
                 answer.position = $scope.selectedQuestion.position
                 answer.out_of = $scope.selectedQuestion['out-of']
-                $scope.newAnswers.push(answer)
+                $scope.newAnswers.push(answer);
                 Problem.createAnswerProblem(answer)
                 $scope.resetView();
             };
