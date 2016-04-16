@@ -79,7 +79,7 @@
     </div>
 
     <div style="margin:20px 0">
-        <div ng-repeat="problemGroup in problemGroups | orderBy:'-' track by $index" style="margin-top:-1px" ng-show="problemGroup.all.length > 0">
+        <div ng-repeat="problemGroup in problemGroups | filter: greaterThan('all', 0) | orderBy:'-' track by $index" style="margin-top:-1px" ng-show="problemGroup.all.length > 0">
             <div class="ui raised segment" style="padding:14px; margin-bottom: 10px;">
                 <div class="ui top attached label" ng-if="problemGroup.minimized[0]['test-paper']" style="text-align:center; background-color:white;">
                     {{problemGroup.minimized[0]['test-paper'].title}}
@@ -88,7 +88,7 @@
                     <div class="ui inverted blurring dimmer" ng-class="{'transition fade in visible active': showDeleteDialog}">
                         <div class="content">
                             <div class="center">
-                                <div ng-click="removeProblem(problemGroup.all, ((problemGroup.all.length - 1) - $index), problemGroup.$index, problemGroups); showDeleteDialog = false" class="ui circular red button">Delete</div><div ng-click="showDeleteDialog = false" class="ui circular button">Cancel</div>
+                                <div ng-click="removeProblem(problemGroup, $index, problemGroup, problemGroups); showDeleteDialog = false" class="ui circular red button">Delete</div><div ng-click="showDeleteDialog = false" class="ui circular button">Cancel</div>
                             </div>
                         </div>
                     </div>

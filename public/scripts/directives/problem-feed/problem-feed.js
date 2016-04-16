@@ -115,18 +115,20 @@ angular.module('smartLearnIoApp')
         };
 
         // Delete Problem from Problems
-        $scope.removeProblem = function(array, index, problemGroupIndex, problemGroups){
-              console.log(array)
-              console.log(array[index].id)
-              Problem.delete(array[index].id)
-              
-              array.splice(index, 1);
-              if (problemGroups[problemGroupIndex].all.length == 1) { //delete entire group if only contains one problem 
-                  problemGroups[problemGroupIndex] = null
-              }else { //delete only one problem from the group if group has >1 problems
-                  // TODO
-              }
-          }
+        // Used in problemGroups ng-repeat filter
+        $scope.greaterThan = function(prop, val){
+            return function(problemGroup){
+                return problemGroup[prop].length > val;
+            }
+        }
+    // Delete Problem from Problems
+      $scope.removeProblem = function(array, index, problemGroupIndex, problemGroups){
+          Problem.delete(array.all[index].id)
+            array.all.splice(index, 1);
+            if (index < 3 || array.minimized.length > 4) {
+                array.minimized.splice(index, 1);
+            }
+        }
             // Get topics for problem-feed search bar
         $http.get(apiBaseUrl + "/topics").then(function(response) {
 
