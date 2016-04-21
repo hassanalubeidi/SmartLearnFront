@@ -133,7 +133,7 @@
                 <div class="ui bottom attached label" style="margin-top:20px" ng-show="problemGroup.all.length - problemGroup.minimized.length > 0">
                     <div class="show more" style="text-align:center;">
                         <a href="">
-                            <span ng-click="loadMoreProblems(problemGroup)">Show {{problemGroup.all.length - problemGroup.minimized.length}} more mistakes from F325 Jun 10...</span>
+                            <span ng-click="loadMoreProblems(problemGroup)">Show {{problemGroup.all.length - problemGroup.minimized.length}} more mistakes from {{problemGroup.minimized[0]['test-paper'].title}}...</span>
                             <i ng-show="problemGroup.loading" class="notched small circle loading icon"></i>
                         </a>
                     </div>
