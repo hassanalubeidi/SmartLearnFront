@@ -1,12 +1,14 @@
 <div ng-controller="problemFeedController">
-    
-    <div style="padding-top:20px">
+        <div style="padding-top:20px">
         <span class="ui header">
         Feed
         </span>
         
         <a style="float:right" class="ui red circular icon button" ng-click="addProblemDialogVisible = !addProblemDialogVisible">
-            <i class="ui plus icon"></i>
+            <i class="ui icon" ng-class="{plus: !addProblemDialogVisible, delete: addProblemDialogVisible}"></i>
+        </a>
+        <a style="float:right" class="ui circular icon button" ng-click="searchVisible = !searchVisible">
+            <i class="ui icon" ng-class="{search: !searchVisible, delete: searchVisible}"></i>
         </a>
         <!--<div style="float:right" class="ui floating circular dropdown icon button">
             <i class="filter icon"></i>
@@ -56,6 +58,60 @@
             <i class="ui search icon"></i>
         </div>-->
     </div>
+    
+    <div class="search" ng-if="searchVisible">
+        <div class="ui inline form">
+            <label>Search <input class="ui field" type="text" ng-model="searchProblems">
+        </div>
+        <div class="ui raised segment" style="padding:14px; margin-bottom: 10px;" ng-if="searchProblems">
+            <div class="problem" ng-repeat="problem in problems | filter:searchProblems">
+                <div class="ui inverted blurring dimmer" ng-class="{'transition fade in visible active': showDeleteDialog}">
+                    <div class="content">
+                        <div class="center">
+                            <div ng-click="removeProblem(problemGroup, $index, problemGroup, problemGroups); showDeleteDialog = false" class="ui circular red button">Delete</div><div ng-click="showDeleteDialog = false" class="ui circular button">Cancel</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui inverted blurring dimmer" ng-class="{'transition fade in visible active': showReviewDialog}">
+                    <div class="content">
+                        
+                        <div class="center">
+                            <div class="ui tiny icon circular button" style="
+                                position: absolute;
+                                top: 0;
+                                right: 0;"
+                                ng-click="showReviewDialog = false">
+                                <i class="ui delete icon"></i>
+                            </div>
+                            <a ng-click="showReviewDialog = false; reviewProblem('correct', problem)" class="ui large green circular button icon"><i class="ui checkmark icon"></i></a>
+                            <a ng-click="showReviewDialog = false; reviewProblem('incorrect', problem)" class="ui large red circular button icon"><i class="ui delete icon"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="summary">
+                    <a class="problem feed header" ui-sref="mistakes({id:problem.id})">{{problem['what-went-wrong']}}</a>
+                    <span ng-show="problem.reviewable" ng-click="showReviewDialog = true" class="ui tiny circular button" style="float:right;">Review</span>
+                    <span class="problem feed time ago">{{problem.timeago}} ago</span>
+                </div>
+                <div class="meta">
+                    <a ng-if="problem.objectives == null" class="ui small label">{{problem.topic.title}}</a>
+                    <a ng-repeat="objective in problem.objectives" ng-if="problem.objectives != null" class="ui small label">{{objective.title}}</a>
+                    <a ng-show="problem.detail" class="ui small label showTestPaperButton" ng-click="makeTestPaperURL(2)">{{problem.detail}}</a>
+                    <a class="reviews">{{problem.reviews.length}} review<span ng-if="problem.reviews.length > 1">s</span>
+                        <span ng-if="problem.reviews.length > 0">
+                            (last: <i class="ui icon" ng-class="{'delete': problem.reviews[problem.reviews.length - 1].status == 'incorrect', 
+                                                                    'checkmark': problem.reviews[problem.reviews.length - 1].status == 'correct'}"></i>)
+                        </span>
+                    </a>
+                    <a><i ng-click="showDeleteDialog = true" class="ui delete red link icon"></i></a>
+                </div>
+                
+                
+            </div>
+        </div>
+    </div>
+
+    
 
     <div class="ui segment form" ng-show="addProblemDialogVisible">
         <div class="ui field">
@@ -78,9 +134,73 @@
         </div>
     </div>
 
+    <div style="margin:20px 0" ng-if="!searchVisible">
+        <div ng-repeat="problemGroup in problemGroups | filter: greaterThan('all', 0) | orderBy:'-' track by $index" style="margin-top:-1px" ng-show="problemGroup.all.length > 0">
+            <div class="ui raised segment" style="padding:14px; margin-bottom: 10px;">
+                <div class="ui top attached label" ng-if="problemGroup.minimized[0]['test-paper']" style="text-align:center; background-color:white;">
+                    {{problemGroup.minimized[0]['test-paper'].title}}
+                </div>
+                <div class="problem" ng-repeat="problem in problemGroup.minimized">
+                    <div class="ui inverted blurring dimmer" ng-class="{'transition fade in visible active': showDeleteDialog}">
+                        <div class="content">
+                            <div class="center">
+                                <div ng-click="removeProblem(problemGroup, $index, problemGroup, problemGroups); showDeleteDialog = false" class="ui circular red button">Delete</div><div ng-click="showDeleteDialog = false" class="ui circular button">Cancel</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui inverted blurring dimmer" ng-class="{'transition fade in visible active': showReviewDialog}">
+                        <div class="content">
+                            
+                            <div class="center">
+                                <div class="ui tiny icon circular button" style="
+                                    position: absolute;
+                                    top: 0;
+                                    right: 0;"
+                                    ng-click="showReviewDialog = false">
+                                    <i class="ui delete icon"></i>
+                                </div>
+                                <a ng-click="showReviewDialog = false; reviewProblem('correct', problem)" class="ui large green circular button icon"><i class="ui checkmark icon"></i></a>
+                                <a ng-click="showReviewDialog = false; reviewProblem('incorrect', problem)" class="ui large red circular button icon"><i class="ui delete icon"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="summary">
+                        <a class="problem feed header" ui-sref="mistakes({id:problem.id})">{{problem['what-went-wrong']}}</a>
+                        <span ng-show="problem.reviewable" ng-click="showReviewDialog = true" class="ui tiny circular button" style="float:right;">Review</span>
+                        <span class="problem feed time ago">{{problem.timeago}} ago</span>
+                    </div>
+                    <div class="meta">
+                        <a ng-if="problem.objectives == null" class="ui small label">{{problem.topic.title}}</a>
+                        <a ng-repeat="objective in problem.objectives" ng-if="problem.objectives != null" class="ui small label">{{objective.title}}</a>
+                        <a ng-show="problem.detail" class="ui small label showTestPaperButton" ng-click="makeTestPaperURL(2)">{{problem.detail}}</a>
+                        <a class="reviews">{{problem.reviews.length}} review<span ng-if="problem.reviews.length > 1">s</span>
+                            <span ng-if="problem.reviews.length > 0">
+                                (last: <i class="ui icon" ng-class="{'delete': problem.reviews[problem.reviews.length - 1].status == 'incorrect', 
+                                                                     'checkmark': problem.reviews[problem.reviews.length - 1].status == 'correct'}"></i>)
+                            </span>
+                        </a>
+                        <a><i ng-click="showDeleteDialog = true" class="ui delete red link icon"></i></a>
+                    </div>
+                    <div ng-show="!$last" style="margin-bottom: 20px"></div>
+                    <div ng-show="$last && problem['test-paper'] != null && problemGroup.all.length > problemGroup.minimized.length" style="padding-bottom: 30px;"></div>
+                    <!--<div class="ui divider" ng-show="!$last"></div>-->
+                    
+                </div>
+                <div class="ui bottom attached label" style="margin-top:20px" ng-show="problemGroup.all.length - problemGroup.minimized.length > 0">
+                    <div class="show more" style="text-align:center;">
+                        <a href="">
+                            <span ng-click="loadMoreProblems(problemGroup)">Show {{problemGroup.all.length - problemGroup.minimized.length}} more mistakes from F325 Jun 10...</span>
+                            <i ng-show="problemGroup.loading" class="notched small circle loading icon"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
     
 
-    <div class="ui feed segment">
+    <!-- <div class="ui feed segment">
         <div class="event" ng-repeat="problem in problems | reverse" style="margin-bottom:15px">
             <div class="ui inverted blurring dimmer" ng-class="{'transition fade in visible active': showDeleteDialog}">
                 <div class="content">
@@ -101,6 +221,7 @@
                 </div>
                 <div class="meta">
                     <a class="ui small label">{{problem.topic.title}}</a>
+                    <a ng-show="problem.detail" class="ui small label">{{problem.detail}}</a>
                     <a class="like" >
                         0 reviews
                     </a>
@@ -109,6 +230,57 @@
             </div>
         </div>
     </div>
-</div>
-
+</div> -->
+<div class="ui testpaper modal" style="max-width:700px">
+        <div class="content">
+            <embed style="margin:auto; max-width:820px; min-width:100%" height="800px" name="paper" id="paper" ng-src="{{trustSrc(testPaperQuestionURL)}}" type="application/pdf" internalinstanceid="21" title="">
+        </div>
+    </div>
+    
 <script>$(".dimmer").dimmer()</script> 
+
+<style>
+    .summary .problem.feed {
+        margin: 0em;
+        font-size: 0.9em;
+        font-weight: bold;
+    }
+    .problem.feed.header {
+        overflow-wrap: break-word;
+    }
+    .problem.feed.time.ago {
+        display: inline-block;
+        float: none;
+        font-weight: normal;
+        font-size: 0.75714286em;
+        font-style: normal;
+        margin: 0em 0em 0em 0.5em;
+        padding: 0em;
+        color: rgba(0, 0, 0, 0.4);
+    }
+    .problem .meta {
+        display: inline-block;
+        font-size: 0.75714286em;
+        margin: 0.5em 0em 0em;
+        background: none;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+        padding: 0em;
+        color: rgba(0, 0, 0, 0.6);
+    }
+    .problem .meta .reviews {
+        cursor: pointer;
+        opacity: 1;
+        color: rgba(0, 0, 0, 0.5);
+        margin: 0em 0.75em 0em 0.75em;
+        
+    }
+    .ui.divider {
+        margin: 0.5rem 0rem;
+    }
+    .ui.top.attached.label:first-child + :not(.attached) {
+        margin-top: 0.8rem !important;
+    }
+    
+</style>
