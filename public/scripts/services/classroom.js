@@ -18,12 +18,13 @@ angular.module('smartLearnIoApp')
             get: function(id) {
                 return $http.get(baseURL + id);
             },
-            create: function(newProblem) {
-                $http.post({
+            create: function(newClassroom) {
+                $http({
                         url: baseURL,
+                        method: 'POST',
                         headers: { 'Content-Type': 'application/vnd.api+json' },
-                        data: {"data": {"type":"answers", "attributes": newProblem}}
-                })
+                        data: {"data": {"type":"classrooms", "attributes": newClassroom } }
+                });
             },
             delete: function(id) {
                 $http({
@@ -31,6 +32,9 @@ angular.module('smartLearnIoApp')
                         method: 'DELETE',
                         headers: { 'Content-Type': 'application/vnd.api+json' }
                 });
-            } 
+            },
+            join: function(id) {
+                return $http.get(baseURL + "join/" + id)
+            }
         };
     });

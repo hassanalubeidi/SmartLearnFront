@@ -1,0 +1,18 @@
+<div class="ui form">
+    <label>Search</label>
+    <input ng-model="searchUser" type="text">
+</div>
+<table class="ui celled table">
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th>Role</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="user in users | filter: searchUser | orderBy:'\u0022current-sign-in-at\u0022':true">
+            <td><a ui-sref="profile_show({id: user.id})">{{user.email}}</a></td>
+            <td><a ng-click="toggleUserRole(user)">[{{user.role}}]</a></td>
+        </tr>
+    </tbody>
+</table>

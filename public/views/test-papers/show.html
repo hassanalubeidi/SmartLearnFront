@@ -1,0 +1,30 @@
+<back-button></back-button>
+<segment-header>{{testpaper.title}} Problems</segment-header>
+<div class="ui form">
+    <div class="ui field">
+        <label>Search</label>
+        <input ng-model="searchProblems" type="text">
+    </div>
+</div>
+<table class="ui selectable compact striped table">
+    <thead>
+        <tr>
+            <th>Question <i class="ui down arrow icon"></i></th>
+            <th>Marks</th>
+            <th>Topic</th>
+            <th>Problem</th>
+            <th>User</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ui-sref="mistakes({id: problem.data.id})"
+         ng-repeat="problem in testPaperProblems | orderBy: attributes.position | filter: searchProblems"
+         ng-class="{red}">
+            <td>{{problem.data.attributes.position}}</td>
+            <td>{{problem.data.attributes.marks}}</td>
+            <td>{{problem.data.attributes.topic.title}}</td>
+            <td>{{problem.data.attributes['what-went-wrong']}}</td>
+            <td>{{problem.data.attributes.user.email}}</td>
+        </tr>
+    </tbody>
+</table>

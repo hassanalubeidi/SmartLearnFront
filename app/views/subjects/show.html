@@ -3,7 +3,7 @@
         {{subject.title}}
     </div>
     <div class="ui circular icon inverted button" ng-click="testPapersShow = !testPapersShow">Test papers <i class="ui down arrow icon"></i></div>
-    <div class="ui cards" style="margin-top:20px" ng-show="testPapersShow">
+    <!--<div class="ui cards" style="margin-top:20px" ng-show="testPapersShow">
         <div class="ui link card" ui-sref="teacher">
             <div class="ui top indicating attached progress" data-percent="<%=  testpaper.tots(current_user)  %>">
                 <div class="bar" style="transition-duration: 300ms; width: <%=  testpaper.tots(current_user) %>%;"></div>
@@ -21,7 +21,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>-->
 </div>
     
 <div class="ui pointing secondary menu">
@@ -83,13 +83,29 @@
         </div>-->
         
         <div class="ui segment">
-            <div class="ui header">
+            <!--<div class="ui header">
                 Objectives
                 
             </div>
             <div ng-repeat="objective in topic.objectives">
                 <a ng-click="getProgress($index)">{{objective.title}} {{objective.progress}}</a>
             </div>
+            ----->
+            <div class="problem" ng-repeat="problem in problems | filter:topic.title | reverse">
+                    <div class="summary">
+                        <a class="problem feed header" ui-sref="mistakes({id:problem.id})">{{problem['what-went-wrong']}}</a>
+                        <span class="problem feed time ago">{{problem.timeago}} ago</span>
+                    </div>
+                    <div class="meta">
+                        <a ng-if="problem.objectives == null" class="ui small label">{{problem.topic.title}}</a>
+                        <a ng-repeat="objective in problem.objectives" ng-if="problem.objectives != null" class="ui small label">{{objective.title}}</a>
+                        <a ng-show="problem.detail" class="ui small image label showTestPaperButton" ng-click="makeTestPaperURL(2)">{{problem['test-paper'].title}}<div class="detail">{{problem.detail}}</div></a>{{problem.user.email}}
+                    </div>
+                    <div ng-show="!$last" style="margin-bottom: 20px"></div>
+                    <div ng-show="$last && problem['test-paper'] != null && problemGroup.all.length > problemGroup.minimized.length" style="padding-bottom: 30px;"></div>
+                    <!--<div class="ui divider" ng-show="!$last"></div>-->
+                    
+                </div>
         </div>
     </div>
 </div>
@@ -98,3 +114,49 @@
 $('.segment .dimmable').dimmer('show');
 $(".popup").popup()
 </script>
+
+<style>
+    .summary .problem.feed {
+        margin: 0em;
+        font-size: 0.9em;
+        font-weight: bold;
+    }
+    .problem.feed.header {
+        overflow-wrap: break-word;
+    }
+    .problem.feed.time.ago {
+        display: inline-block;
+        float: none;
+        font-weight: normal;
+        font-size: 0.75714286em;
+        font-style: normal;
+        margin: 0em 0em 0em 0.5em;
+        padding: 0em;
+        color: rgba(0, 0, 0, 0.4);
+    }
+    .problem .meta {
+        display: inline-block;
+        font-size: 0.75714286em;
+        margin: 0.5em 0em 0em;
+        background: none;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+        padding: 0em;
+        color: rgba(0, 0, 0, 0.6);
+    }
+    .problem .meta .reviews {
+        cursor: pointer;
+        opacity: 1;
+        color: rgba(0, 0, 0, 0.5);
+        margin: 0em 0.75em 0em 0.75em;
+        
+    }
+    .ui.divider {
+        margin: 0.5rem 0rem;
+    }
+    .ui.top.attached.label:first-child + :not(.attached) {
+        margin-top: 0.8rem !important;
+    }
+    
+</style>

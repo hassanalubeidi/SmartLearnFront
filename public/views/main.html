@@ -1,9 +1,63 @@
-<today>
-    <a ng-repeat="testPaper in testPapers"
-         ui-sref="interim_test_mistakes({id: testPaper.id})"
-         class="ui basic inverted circular button">
-        {{testPaper.title}} <span ng-show="testPaper.total"> | {{testPaper.total}} / 100</span>
-    </a>
+<div ng-show="current_user.classrooms.length == 0">    
+    <div class="ui inverted padded segment" style="background-image: url('http://static1.squarespace.com/static/53c6e07ae4b01f6b7aa0f482/55440315e4b03724d70b6ef4/554403eae4b0a1a9a9f8a704/1430520814475/tumbleweed_licnsed_2.jpg?format=1500w'); background-size: cover;
+            background-position: 0px 70%;">
+        <div class="ui header">*tumbleweed*</div>
+        You currently aren't part of any classrooms. Would you like to <strong><a style="color:white" ui-sref="join_classroom">join one?</a></strong>
+    </div>
+</div>
+<div ng-show="current_user.classrooms.length > 0">
+    <today>
+        <a ng-repeat="testPaper in testPapers"
+            ui-sref="interim_test_mistakes({id: testPaper.id})"
+            class="ui basic inverted circular button">
+            {{testPaper.title}} <span ng-show="testPaper.total"> | {{testPaper.total}}/ 60</span>
+        </a>
+        <div class="ui divider"></div>
+        <a ng-repeat="classroom in current_user.classrooms" class="ui basic circular inverted button">{{classroom.title}}</a><div class="ui circular button" ui-sref="join_classroom">Join a classroom</div>
+    </today>
+    <problem-feed></problem-feed>
+</div>
+
+
+<style>
+    .summary .problem.feed {
+        margin: 0em;
+        font-size: 0.9em;
+        font-weight: bold;
+    }
+    .problem.feed.header {
+        overflow-wrap: break-word;
+    }
+    .problem.feed.time.ago {
+        display: inline-block;
+        float: none;
+        font-weight: normal;
+        font-size: 0.75714286em;
+        font-style: normal;
+        margin: 0em 0em 0em 0.5em;
+        padding: 0em;
+        color: rgba(0, 0, 0, 0.4);
+    }
+    .problem .meta {
+        display: inline-block;
+        font-size: 0.75714286em;
+        margin: 0.5em 0em 0em;
+        background: none;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+        padding: 0em;
+        color: rgba(0, 0, 0, 0.6);
+    }
+    .problem .meta .reviews {
+        cursor: pointer;
+        opacity: 1;
+        color: rgba(0, 0, 0, 0.5);
+        margin: 0em 0.75em 0em 0.75em;
+        
+    }
+    .ui.divider {
+        margin: 0.5rem 0rem;
+    }
     
-</today>
-<problem-feed></problem-feed>
+</style>

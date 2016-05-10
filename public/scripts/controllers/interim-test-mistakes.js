@@ -35,8 +35,10 @@ angular.module('smartLearnIoApp')
             
             // Checks if Marks have been inputted
             $scope.checkMarks = function() {
-                if($scope.newAnswer.marks > -1) {
+                if($scope.newAnswer.marks > -1 && $scope.newAnswer.marks < $scope.selectedQuestion['out-of']) {
                     $scope.attachMistakesVisible = true;
+                }else {
+                    $scope.attachMistakesVisible = false;
                 }
             };
             
@@ -48,7 +50,7 @@ angular.module('smartLearnIoApp')
                 answer['user-id'] = $scope.currentUser.id
                 answer.position = $scope.selectedQuestion.position
                 answer.out_of = $scope.selectedQuestion['out-of']
-                $scope.newAnswers.push(answer);
+                $scope.newAnswers.push(answer)
                 Problem.createAnswerProblem(answer)
                 $scope.resetView();
             };

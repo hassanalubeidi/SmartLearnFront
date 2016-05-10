@@ -26,7 +26,7 @@ angular.module('smartLearnIoApp')
                 return $http.get(baseURL + createfindByQuery(clauses));
             },
             get: function(id) {
-                return $http.get(baseURL + id);
+                return $http.get(baseURL + id + "?include=problems");
             },
             create: function(newProblem) {
                 $http({

@@ -19,9 +19,9 @@ angular.module('smartLearnIoApp')
             // Load selected Question
             $scope.getQuestion = function() {
                 Question.get($scope.selectQuestionPosition).then(function(response) {
-                    $scope.selectedQuestion = JsonAPI.pluckAttributes([response.data.data])[0]
-                    $scope.selectedQuestion['objectives'] = response.data.data.attributes['objectives']
-                    $scope.selectedQuestion['topic-id'] = response.data.data.attributes['objectives'][0].topic_id
+                    $scope.selectedQuestion = JsonAPI.pluckAttributes([response.data.data])[0];
+                    $scope.selectedQuestion['objectives'] = response.data.data.attributes['objectives'];
+                    $scope.selectedQuestion['topic-id'] = response.data.data.attributes['objectives'][0].topic_id;
                 });
             };
             
@@ -30,17 +30,16 @@ angular.module('smartLearnIoApp')
                 if($scope.selectQuestionPosition !== undefined) {
                     $scope.getQuestion();
                     $scope.attachMarksVisible = true;
-                    
                 }
             };
             
             // Checks if Marks have been inputted
             $scope.checkMarks = function() {
                 if($scope.newAnswer.marks > -1 && $scope.newAnswer.marks < $scope.selectedQuestion['out-of']) {
-                    $scope.attachMistakesVisible = true
+                    $scope.attachMistakesVisible = true;
                 }else {
-			$scope.attachMistakesVisible = false
-		}
+                    $scope.attachMistakesVisible = false;
+                }
             };
             
             // Adds answer to newAnswers array, ready to be sent to API
@@ -51,7 +50,8 @@ angular.module('smartLearnIoApp')
                 answer['user-id'] = $scope.currentUser.id
                 answer.position = $scope.selectedQuestion.position
                 answer.out_of = $scope.selectedQuestion['out-of']
-                $scope.newAnswers.push(answer);
+                $scope.newAnswers.push(answer)
+                Problem.createAnswerProblem(answer)
                 $scope.resetView();
             };
             
@@ -64,9 +64,4 @@ angular.module('smartLearnIoApp')
                 $scope.attachMistakesVisible = false;
                 $scope.newAnswer = undefined;
             };
-            
-            $scope.setAsFinsihed = function() {
-                Problem.createSpecific.interimTest($scope.newAnswers)
-                $scope.newAnswers = []
-            }
     }]);

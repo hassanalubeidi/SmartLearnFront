@@ -10,10 +10,13 @@
         </div>
         <div class="results"></div>
         </div>-->
-	<!--
-        <a ng-show="user.id" class="ui item" ui-sref="teacher">
+        <a ng-show="user.id && (user.role == 'teacher' || user.role == 'admin')" class="ui item" ui-sref="teacher">
             Teacher
-        </a>-->
+        </a>
+        
+        <a ng-show="user.id && user.role == 'admin'" class="ui item" ui-sref="teacher">
+            Admin
+        </a>
         <a ng-show="user.id" class="ui item" ng-click="signOut()">
             Sign out
         </a>

@@ -19,8 +19,13 @@ angular
     'ng-token-auth',
     'ui.router'
   ])
-  .constant('apiBaseUrl', 'http://api.smartlearn.io')
-  .run(['$rootScope', '$location', function($rootScope, $location) {
+  .constant('apiBaseUrl', 'http://api.smartlearn.io/')
+  .run(['$rootScope', '$location','authProvider', function($rootScope, $location, authProvider) {
+    // if (!authProvider.isLoggedIn()) {
+    //       console.log('DENY : Redirecting to Login');
+    //       $location.path('/signin');
+    // }  
+      
     $rootScope.$on('auth:login-success', function() {
         $location.path('/');
     });
@@ -29,8 +34,7 @@ angular
     });
   }])
   .config(function($routeProvider, $authProvider, $stateProvider, $httpProvider, $urlRouterProvider, apiBaseUrl) {
-    // Only consume JSON API
-    //$httpProvider.defaults.headers.get = { 'Accept' : 'application/vnd.api+json' }
+    //$httpProvider.defaults.headers.get = { 'Content-Type' : 'application/vnd.api+json' }
     $authProvider.configure({
         apiUrl: apiBaseUrl,
     });
@@ -46,6 +50,21 @@ angular
             return $auth.validateUser();
           }
         }
+      })
+      .state('admin', {
+        url: '/admin',
+        controller: 'AdminController',
+        templateUrl: 'views/admin/index.html',
+        resolve: {
+          auth: function($auth) {
+            return $auth.validateUser();
+          }
+        }
+      })
+      .state('test_paper_show', {
+          url: '/test-papers/:id',
+          templateUrl: 'views/test-papers/show.html',
+          controller: 'TestPaperController'
       })
       .state('teacher', {
         url: '/teacher',
@@ -67,12 +86,22 @@ angular
           }
         }
       })
+      .state('join_classroom', {
+          url: '/classrooms/join',
+          templateUrl: 'views/classrooms/join.html',
+          controller: 'classroomsController',
+          reslove: {
+              auth: function($auth) {
+                  return $auth.validateUser();
+              }
+          }
+      })
       .state('mistakes', {
             url: '/mistakes/:id',
             templateUrl: 'views/mistakes/show.html',
             controller: 'mistakesController',
             resolve: {
-            auth: function($auth) {
+                auth: function($auth) {
                     return $auth.validateUser();
                 }
             }
@@ -88,11 +117,11 @@ angular
           controller: 'ProfileCtrl'
       })
       .state('signin', {
-          url: '/sign_in',
+          url: '/signin',
           templateUrl: 'views/user_sessions/new.html'
       })
       .state('signup', {
-          url: '/sign_up',
+          url: '/signup',
           controller: 'UserSessionsCtrl',
           templateUrl: 'views/user_registrations/new.html'
       })
@@ -110,11 +139,19 @@ angular
       })
   })
   .filter('reverse', function() {
-    return function(items) {
-        return items.slice().reverse();
+    return function(items, total) {
+        if (typeof(items) == "object") {
+            return items.slice().reverse();
+        }else {
+            return items
+        }
+        
     };
   })
-  .controller('IndexCtrl', ['$scope', '$stateParams', function ($scope, $stateParams) {
-    
+  .controller('IndexCtrl', ['$scope', '$stateParams', 'User', 'JsonAPI', '$rootScope',  function ($scope, $stateParams, User, $rootScope, JsonAPI) {
+      User.get($scope.user.id).then(function(response) {
+          $scope.current_user = response.data.data.attributes
+      })
   }])
+  
   

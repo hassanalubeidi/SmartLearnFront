@@ -1,0 +1,31 @@
+<a  href="/#/" class="ui circular small icon button"><i class="ui left arrow icon"></i> Back</a>
+<div class="ui blue secondary inverted segment">
+    <div class="ui header">Join a class</div>
+</div>
+<div class="ui form">
+    <input class="ui serach input" type="text" ng-model="classroomSearch" placeholder="Search..">
+</div>
+<div class="ui three stackable cards" style="margin-top:20px;">
+    <div class="card" ng-repeat="classroom in classrooms |filter: {title: classroomSearch}">
+        <div class="content">
+            <div class="header">
+                {{classroom.title}}
+            </div>
+            <div class="meta">
+                Classroom
+            </div>
+            <div class="description">
+                <div class="ui olive label">Chemistry</div>
+            </div>
+        </div>
+        <div class="extra content">
+            <div class="ui two buttons">
+                <div class="ui basic button" ng-class="{green: !classroom.joined, 'loading': classroom.loading, 'red': classroom.joined}" ng-click="toggleClassroom(classroom)">
+                    <span ng-show="!classroom.joined">Join</span>
+                    <span ng-show="classroom.joined">Leave</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>

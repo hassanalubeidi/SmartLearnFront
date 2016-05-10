@@ -114,6 +114,9 @@
     
 
     <div class="ui segment form" ng-show="addProblemDialogVisible">
+        <div class="ui red message" ng-if="newProblemError">
+            {{newProblemError}}
+        </div>
         <div class="ui field">
             <label>Topic:</label>
             <div class="ui topic search">

@@ -26,7 +26,7 @@ angular.module('smartLearnIoApp')
                 });
             },
             createAndParse: function(newTestPaper, url) {
-                $http({
+               return $http({
                         url: baseURL,
                         method: 'POST',
                         headers: { 'Content-Type': 'application/vnd.api+json' },

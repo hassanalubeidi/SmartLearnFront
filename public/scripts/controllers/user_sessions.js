@@ -12,6 +12,7 @@ angular.module('smartLearnIoApp')
       $rootScope.$on('auth:login-success', function(ev, user) {
         });
       $scope.$parent.wide = $scope.wide
+      $scope.registartionErrors = undefined
       $scope.handleRegBtnClick = function() {
         $auth.submitRegistration($scope.registrationForm)
             .then(function() { 
@@ -19,6 +20,9 @@ angular.module('smartLearnIoApp')
                     email: $scope.registrationForm.email,
                     password: $scope.registrationForm.password
                 });
+                $scope.registartionErrors = undefined
+            }, function(registrationError) {
+                $scope.registartionErrors = registrationError.data.errors.full_messages
             });
       };
   }]);

@@ -102,12 +102,15 @@ angular.module('smartLearnIoApp')
            $scope.createProblem = function(newProblem) {
                // Find topic by name
                // Use index 1, because of weird array issue
+               
+               
                var topic_name = '"' + $(".topic.search").search("get value") + '"';
                console.log("The topic name from the search is: ");
                console.log(topic_name);
-
                $http.get(apiBaseUrl + "/topics?filter[title]=" + topic_name).then(function(response) {
-
+                   if (response.data.data.length == 0) {
+                       $scope.newProblemError = "error: no topic found"
+                   }
                    console.log("Response: ");
                    console.log(response);
 
@@ -135,11 +138,14 @@ angular.module('smartLearnIoApp')
                    }).then(function(problemResponse) {
                        // TODO: This is an ugly fix
                        //problemResponse.data.data.attributes.id = $scope.problems[$scope.problems.length - 1].id + 1;
+                       $scope.newProblemError = null
                        $scope.problemGroups.push({
                            all: [problemResponse.data.data.attributes],
                            minimized: [problemResponse.data.data.attributes],
                            loading: false
                        });
+                   }, function(problemErrorResponse) {
+                       $scope.newProblemError = problemErrorResponse.data.errors[0].detail
                    });
                    //payload.data.attributes.id = $scope.problems[$scope.problems.length - 1].id + 1
                    // TODO: This should be more elegant

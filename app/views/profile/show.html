@@ -1,8 +1,81 @@
 <segment-header>Report: {{profile.user.attributes.email}}</segment-header>
-<div class="ui inverted blue top attached  menu">
-  <a class="item" ng-repeat="subject in profile.subjects" ng-class="{active: selectedSubjectIndex == $index}" ng-click="selectedSubjectIndex = $index">
-    {{subject.title}}
-  </a>
+<div style="margin:20px 0">
+        <div ng-repeat="problemGroup in problemGroups | orderBy:'-' track by $index" style="margin-top:-1px" ng-show="problemGroup.all.length > 0">
+            <div class="ui raised segment" style="padding:14px; margin-bottom: 10px;">
+                <div class="ui top attached label" ng-if="problemGroup.minimized[0]['test-paper']" style="text-align:center; background-color:white;">
+                    {{problemGroup.minimized[0]['test-paper'].title}}
+                </div>
+                <div class="problem" ng-repeat="problem in problemGroup.minimized">
+                    <div class="summary">
+                        <a class="problem feed header" ui-sref="mistakes({id:problem.id})">{{problem['what-went-wrong']}}</a>
+                        <span class="problem feed time ago">{{problem.timeago}} ago</span>
+                    </div>
+                    <div class="meta">
+                       <a class="ui small label">{{problem.topic.title}}</a>
+                        <a ng-show="problem.detail" class="ui small label">{{problem.detail}}</a>
+                        <a class="reviews">{{problem.reviews.length}} review<span ng-if="problem.reviews.length > 1">s</span>
+                            <span ng-if="problem.reviews.length > 0">
+                                (last: <i class="ui icon" ng-class="{'delete': problem.reviews[problem.reviews.length - 1].status == 'incorrect', 
+                                                                     'checkmark': problem.reviews[problem.reviews.length - 1].status == 'correct'}"></i>)
+                            </span></a>
+                    </div>
+                    <div ng-show="!$last" style="margin-bottom: 20px"></div>
+                    <div ng-if="$last && problem['test-paper'] != null && problemGroup.all.length > problemGroup.minimized.length" style="padding-bottom: 30px;"></div>
+                    <!--<div class="ui divider" ng-show="!$last"></div>-->
+                    
+                </div>
+                <div class="ui bottom attached label" style="margin-top:20px" ng-if="problemGroup.all.length - problemGroup.minimized.length > 0">
+                    <div class="show more" style="text-align:center;">
+                        <a href="">
+                            <span ng-click="loadMoreProblems(problemGroup)">Show {{problemGroup.all.length - problemGroup.minimized.length}} more mistakes from F325 Jun 10...</span>
+                            <i ng-show="problemGroup.loading" class="notched small circle loading icon"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
 </div>
-<div class="ui bottom attached segment">
-</div>
+<style>
+    .summary .problem.feed {
+        margin: 0em;
+        font-size: 0.9em;
+        font-weight: bold;
+    }
+    .problem.feed.header {
+        overflow-wrap: break-word;
+    }
+    .problem.feed.time.ago {
+        display: inline-block;
+        float: none;
+        font-weight: normal;
+        font-size: 0.75714286em;
+        font-style: normal;
+        margin: 0em 0em 0em 0.5em;
+        padding: 0em;
+        color: rgba(0, 0, 0, 0.4);
+    }
+    .problem .meta {
+        display: inline-block;
+        font-size: 0.75714286em;
+        margin: 0.5em 0em 0em;
+        background: none;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+        padding: 0em;
+        color: rgba(0, 0, 0, 0.6);
+    }
+    .problem .meta .reviews {
+        cursor: pointer;
+        opacity: 1;
+        color: rgba(0, 0, 0, 0.5);
+        margin: 0em 0.75em 0em 0.75em;
+        
+    }
+    .ui.divider {
+        margin: 0.5rem 0rem;
+    }
+    
+</style>

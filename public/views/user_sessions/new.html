@@ -1,10 +1,11 @@
 <!-- client/app/views/user_sessions/new.html -->
 
-<div class="ui text container">
+<div class="ui text container" ng-show="!user.id">
     <segment-header style="padding: 20px;">
         Sign in
     </segment-header>
     <form ng-submit="submitLogin(loginForm)" role="form" ng-init="loginForm = {}" class="ui segment form" style="margin-top:-10px">
+        
         <div class="form-group">
             <label for="email">Email</label>
             <input type="email"
