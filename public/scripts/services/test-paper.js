@@ -17,6 +17,9 @@ angular.module('smartLearnIoApp')
             get: function(id) {
                 return $http.get(baseURL + id);
             },
+            getDetails: function(id) {
+                return $http.get(apiBaseUrl + '/test-paper-details/' + id);
+            },
             create: function(newTestPaper) {
                 $http({
                         url: baseURL,

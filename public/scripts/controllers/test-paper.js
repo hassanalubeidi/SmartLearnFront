@@ -2,7 +2,7 @@ angular.module('smartLearnIoApp')
   .controller('TestPaperController', ['$stateParams', 'Problem', 'TestPaper', 'Answer', 'JsonAPI',  '$scope',
     function ($stateParams, Problem, TestPaper, Answer, JsonAPI, $scope) {
         
-        TestPaper.get($stateParams.id).then(function(response) { 
+        TestPaper.getDetails($stateParams.id).then(function(response) { 
             $scope.testpaper = JsonAPI.pluckAttributes([response.data.data])[0]
             console.log($scope.testpaper.problems)
             $scope.testPaperProblems = $scope.testpaper.problems
